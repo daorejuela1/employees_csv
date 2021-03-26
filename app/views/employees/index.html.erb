@@ -1,0 +1,4 @@
+<h1 class="display-5 text-center"> Empleados del negocio </h1>
+<% @employee.each do |employee| %>
+  <%= render "employee_card", employee: employee %>
+<% end %>

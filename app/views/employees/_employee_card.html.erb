@@ -1,0 +1,16 @@
+<div class="card bg-light text-center mb-3 mx-auto" style="max-width: 50rem;">
+  <div class="card-body">
+      <%= employee.surnames + ", " + employee.names %>
+      <p class="card-title"><p class="font-weight-bold d-inline"><%= employee.job_title %></p>
+      , Departamento: <%= employee.department %>
+      </p>
+    <div class="dropdown-divider"></div>
+    <p class="text-center">
+    <p class="font-weight-bold d-inline">Salario: </p><%= employee.salary %>
+    </p>
+  </div>
+  <p class="card-footer">
+  <small class="text-muted">
+    Información de contacto: <%= to_phone(employee.telephone) %> - <%= employee.email %>
+  </small></p>
+</div>

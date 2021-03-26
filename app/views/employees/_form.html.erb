@@ -1,0 +1,49 @@
+<%= form_with url: url, model: employee do |form| %>
+
+  <% if employee.errors.any? %>
+    <div class="alert alert-danger">
+      <% employee.errors.full_messages.each do |message| %>
+        <div><%= message %> </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :names, "Nombres" %>
+    <%= form.text_field :names, class: "form-control", placeholder: "Pepito Ramos", autofocus: true %>
+    <small id="names" class="form-text text-muted">Nombre del empleado?</small>
+  </div>
+  <div class="form-group">
+    <%= form.label :surnames, "Apellidos" %>
+    <%= form.text_field :surnames, class: "form-control", placeholder: "Perez Ospinosa" %>
+    <small id="surnames" class="form-text text-muted">Apellidos del empleado.</small>
+  </div>
+  <div class="form-group">
+    <%= form.label :telephone, "Numero télefonico" %>
+    <%= form.telephone_field :telephone, class: "form-control", placeholder: "(330) 541-2324", maxlength: 10 %>
+    <small id="telephone" class="form-text text-muted">Télefono del empleado.</small>
+  </div>
+  <div class="form-group">
+    <%= form.label :email %>
+    <%= form.email_field :email, class: "form-control", placeholder: "pepito@perez.com" %>
+    <small id="email" class="form-text text-muted">E-mail del empleado.</small>
+  </div>
+  <div class="form-group">
+    <%= form.label :salary %>
+    <%= form.text_field :salary, class: "form-control", placeholder: "$5.5200.390,00" %>
+    <small id="salary" class="form-text text-muted">Salario del empleado.</small>
+  </div>
+  <div class="form-group">
+    <%= form.label :job_title, "Cargo" %>
+    <%= form.text_field :job_title, class: "form-control", placeholder: "Ingeniero" %>
+    <small id="job_title" class="form-text text-muted">Cargo del empleado.</small>
+  </div>
+  <div class="form-group">
+    <%= form.label :department, "Departamento" %>
+    <%= form.select :department, @departments %>
+    <small id="Username" class="form-text text-muted">Departamento del empleado.</small>
+  </div>
+
+ <%= form.submit "Guardar empleado", class: "btn btn-success btn-lg btn-block" %>
+
+<% end %>
