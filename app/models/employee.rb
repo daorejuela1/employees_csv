@@ -1,24 +1,40 @@
 class Employee < ApplicationRecord
 
+  REGEX_FOR_SALARY = /\A(\$|)\d+\z/.freeze
   validates :names, presence: true
   validates :surnames, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_email_layers
   validates :telephone, presence: true, format: { with: /\A\d+\z/, message: "Sólo puedes colocar números" },length: { is: 10 }
-  validates :salary, presence: true
+  validates :salary, presence: true, format: {with: REGEX_FOR_SALARY, message: "Sólo puedes colocar números o iniciar con el simbolo $ para indicar pesos colombianos"}
   validates :job_title, presence: true
   validate :validate_department
 
   def self.departments
-    ["contabilidad", "finanzas", "operaciones", "seguridad", "recursos humanos"]
+    return colors = {
+      primary: "Contabilidad",
+      success: "Finanzas",
+      dark: "Operaciones",
+      warning: "Seguridad",
+      info: "Recursos humanos"
+    }
   end
 
   def self.generate_csv
     CSV.generate(headers: true) do |csv|
-      csv << self.attribute_names
+      attributes = self.attribute_names.select {|x| !x.ends_with? ("at")}
+      csv << attributes
       all.each do |record|
-        csv << record.attributes.values
+        csv << record.attributes.values_at(*attributes)
       end
+    end
+  end
+
+  def self.import_csv(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      employee_dict = row.to_hash
+      employee = Employee.find_or_create_by!(employee_dict)
+      employee.update(employee_dict)
     end
   end
 

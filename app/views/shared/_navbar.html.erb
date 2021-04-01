@@ -1,16 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-light nav-tabs bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Mis empleados</a>
+  <%= link_to "Mis empleados", root_path, class: "navbar-brand"%>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item m-2">
-          <%= link_to "Importar CSV", new_employee_path, class: "btn btn-outline-primary"%>
+          <%= render "shared/import_form" %>
         </li>
         <li class="nav-item m-2">
-          <%= link_to "Exportar CSV", exportar_csv_path, class: "btn btn-outline-success"%>
+          <%= link_to "Exportar CSV", export_employees_path, class: "btn btn-outline-success", method: :post%>
         </li>
         <li class="nav-item m-2"> 
           <%= link_to "Agregar nuevo empleado", new_employee_path, class: "btn btn-outline-dark"%>
