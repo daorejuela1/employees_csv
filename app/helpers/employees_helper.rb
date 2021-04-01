@@ -1,9 +1,9 @@
 module EmployeesHelper
   def to_currency(salary)
-    @salary = number_to_currency(salary, :precision => 2, :separator => ',', :delimiter => '.')
+    salary.starts_with?("$") ? number_to_currency(salary[1..-1], precision: 2, separator: ',', delimiter: '.', raise: true) : salary
   end
 
   def to_phone(phone)
-    @phone = number_to_phone(phone, :area_code => true)
+    number_to_phone(phone, area_code: true)
   end
 end
