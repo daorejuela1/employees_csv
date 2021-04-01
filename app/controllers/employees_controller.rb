@@ -1,9 +1,11 @@
 class EmployeesController < ApplicationController
+  rescue_from CSV::MalformedCSVError, with: :bad_file
+  rescue_from ActiveRecord::RecordInvalid, with: :bad_file
 
   before_action :set_departments, only: [:new, :create]
 
   def index
-    @employee = Employee.all
+    @employee = Employee.search(params[:search])
     @colors_map = Employee.departments
   end
 
@@ -25,12 +27,12 @@ class EmployeesController < ApplicationController
   end
 
   def import
-    if params[:file].nil?
-      redirect_to request.referer, alert: "Indique un archivo"
-    else
+      if params[:file].nil?
+        no_import_file
+      else
       Employee.import_csv(params[:file])
       redirect_to root_path, notice: "Empleados importados"
-    end
+      end
   end
 
   private
@@ -41,5 +43,13 @@ class EmployeesController < ApplicationController
 
   def set_departments
     @departments = Employee.departments.values.map(&:capitalize)
+  end
+
+  def no_import_file
+      redirect_to request.referer, alert: "Indique un archivo"
+  end
+
+  def bad_file
+    redirect_to request.referer, alert: "Archivo no valido"
   end
 end
