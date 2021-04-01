@@ -3,7 +3,7 @@ class EmployeesController < ApplicationController
   before_action :set_departments, only: [:new, :create]
 
   def index
-    @employee = Employee.all
+    @employee = Employee.search(params[:search])
     @colors_map = Employee.departments
   end
 
